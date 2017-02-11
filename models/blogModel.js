@@ -1,16 +1,27 @@
 const mongoose = require('mongoose');
 
-var blogSchema = mongoose.Schema;
+var commentsSchema = new mongoose.Schema({
+	title		: 	{type: String},
+	contents	: 	{type: String},
+	likes		: 	{type: Number},
+	authorID 	: 	{type: String},
+	created 	: 	{type: Date, default: Date.now()}
+});
+
 //Assuming a blog can be written by an author multiple times, so I have kept author details in its own schema, otherwise there would
 //be duplicacy in our blog model as to every document whose author is a particular user would be present, leading to updation anomaly
-var blogModel = new blogSchema({
+
+//In this assignment however there is no interaction with the Author model to keep it simple
+
+//to embed comments into blog document the above process is used
+
+var blogSchema = new mongoose.Schema({
 	title		: 	{type:String},
-	created		: 	{type:Date},
+	created		: 	{type:Date, default: Date.now()},
 	contents	: 	{type:String},
-	images		: 	[{type:String}],
-	likes		: 	{type: Number},
-	comments	: 	[{text:{type: String}, likes:{type:Number, default:0}}, author:{type:String}],
+	likes		: 	{type: Number, default: 0},
+	comments	: 	[commentsSchema],
 	authorID	: 	{type:String} 
 });
 
-mongoose.model('blog', blogModel);
+mongoose.model('blog', blogSchema);
