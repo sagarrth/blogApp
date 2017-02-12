@@ -75,7 +75,7 @@ function blogController(app){
 	});
 
 	//route to delete a blog
-	blogRouter.delete('/delete/:id', (req, res)=>{
+	blogRouter.delete('/delete/:id', validator, (req, res)=>{
 		blogModel.findByIdAndRemove(req.params.id, (err, data) => {
 			if(err){
 				res.send(responseGenerator.generate(err, 'Internal Server Error', 500, null));

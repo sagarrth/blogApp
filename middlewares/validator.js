@@ -1,5 +1,5 @@
 function validator(req, res, next) {
-	if(Object.keys(req.body).length>0 && req.method!=='GET'){
+	if(Object.keys(req.body).length>0 && req.method!=='GET' && req.method!=='DELETE'){
 		if(req.method === 'POST' && req.body.title && req.body.contents && req.body.authorID){
 			//for POST method it is mandatory to have the above three fields
 			next();
