@@ -16,11 +16,11 @@ function blogController(app){
 			authorID 	: 	req.body.authorID
 		});
 		//save the model in db
-		newBlog.save((err) => {
+		newBlog.save((err, data) => {
 			if(err){
 				res.send(responseGenerator.generate(err, 'Internal Server Error', 500, null));
 			} else {
-				res.send(responseGenerator.generate(null, 'Created', 200, null));		
+				res.send(responseGenerator.generate(null, 'Created', 200, data));		
 			}
 		});
 		
