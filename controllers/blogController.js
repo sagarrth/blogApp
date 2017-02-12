@@ -65,7 +65,7 @@ function blogController(app){
 			}
 		}
 		
-		blogModel.findOneAndUpdate({_id: req.params.id}, update, (err, data) => {
+		blogModel.findOneAndUpdate({_id: req.params.id}, update, {new: true}, (err, data) => {
 			if(err){
 				res.send(responseGenerator.generate(err, 'Invalid ID', 404, null));
 			} else {
