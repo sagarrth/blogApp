@@ -3,6 +3,7 @@ const fs 		 = 	require('fs');
 const bodyParser = 	require('body-parser');
 const path 		 =	require('path');
 const mongoose 	 = 	require('mongoose');
+const logger	 =	require('morgan');
 const app 		 = 	express();
 
 
@@ -10,13 +11,17 @@ let port 		 = process.env.PORT || 3000;
 const dbPath 	 = 'mongodb://localhost:27017/blogApp';
 
 mongoose.connect(dbPath);
-mongoose.connection.once('open', ()=>{
+let db = mongoose.connection;
+db.once('open', ()=>{
 	console.log("database connection opened");
 });
 
+db.on('error', console.error.bind(console, 'connection error'));
+
 //app level middleware
+app.use(logger('dev'));
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(bodyParser.json());
+app.use(bodyParser.json({extended: true}));
 
 //load models into app
 fs.readdirSync('./models').forEach((model) => {
